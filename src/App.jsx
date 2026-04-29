@@ -74,7 +74,7 @@ function App() {
                   ];
                   description = "Stay grounded, stay focused. This urban drip tee combines minimalist typography with a bold message. 100% premium cotton for maximum comfort.";
                 } else if (isPoster) {
-                  images = ['/images/stay_humble_poster_2.jpg', '/images/stay_humble_poster_1.png'];
+                  images = ['/images/stay_humble_poster_new.jpg', '/images/stay_humble_poster_2.jpg', '/images/stay_humble_poster_1.png'];
                   description = "High-quality museum-grade framed poster of the 'Stay Humble' neon aesthetic. A vibrant urban statement piece for your gaming setup or living space.";
                 }
               } else if (productName.includes('hasta la victoria siempre')) {
