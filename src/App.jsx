@@ -43,15 +43,19 @@ function App() {
                     '/images/che_guevara_mockup.png',
                     '/images/che_guevara_black.jpg',
                     '/images/che_guevara_maroon.jpg',
-                    '/images/che_guevara_grey.jpg'
+                    '/images/che_guevara_grey.jpg',
+                    '/images/che_guevara_cardinal.png',
+                    '/images/che_guevara_charcoal.png',
+                    '/images/che_guevara_purple.png'
                   ];
                   imageMap = {
                     'Black': '/images/che_guevara_black.jpg',
                     'Maroon': '/images/che_guevara_maroon.jpg',
                     'Sport Grey': '/images/che_guevara_grey.jpg',
-                    'Charcoal': '/images/che_guevara_grey.jpg',
-                    'Dark Heather': '/images/che_guevara_grey.jpg',
-                    'Navy': '/images/che_guevara_black.jpg'
+                    'Grey': '/images/che_guevara_grey.jpg',
+                    'Cardinal': '/images/che_guevara_cardinal.png',
+                    'Charcoal': '/images/che_guevara_charcoal.png',
+                    'Purple': '/images/che_guevara_purple.png'
                   };
                 } else if (isPoster) {
                   images = ['/images/che_guevara_poster.jpg'];
@@ -270,6 +274,7 @@ function ProductCard({ product, addToCart, index }) {
       'Irish Green': '#009e60',
       'Orange': '#ffa500',
       'Purple': '#800080',
+      'Cardinal': '#c41e3a',
       'Light Blue': '#add8e6',
       'Light Pink': '#ffb6c1',
       'Gold': '#ffd700',
