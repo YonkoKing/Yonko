@@ -86,7 +86,9 @@ app.get('/api/products', async (req, res) => {
             id: v.id,
             external_id: v.external_id,
             name: v.name,
-            price: parseFloat(v.retail_price)
+            price: parseFloat(v.retail_price),
+            size: v.size,
+            color: v.color
           }))
         };
       } catch (err) {
