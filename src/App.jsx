@@ -245,14 +245,14 @@ function ProductCard({ product, addToCart, index }) {
   const availableColors = [...new Set(variants.map(v => v.color))].filter(Boolean);
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(availableColors[0] || null);
+  const [selectedColor, setSelectedColor] = useState(null);
   
   // Calculate sizes strictly available for the selected color
   const availableSizesForColor = [...new Set(variants.filter(v => !selectedColor || v.color === selectedColor).map(v => v.size))].filter(Boolean);
-  const [selectedSize, setSelectedSize] = useState(availableSizesForColor[0] || null);
+  const [selectedSize, setSelectedSize] = useState(null);
   
   // Dynamically derive the valid size without using an effect
-  const activeSize = availableSizesForColor.includes(selectedSize) ? selectedSize : availableSizesForColor[0];
+  const activeSize = availableSizesForColor.includes(selectedSize) ? selectedSize : null;
 
   // Color name to Hex mapping
   const colorToHex = (colorName) => {
@@ -285,7 +285,9 @@ function ProductCard({ product, addToCart, index }) {
   const selectedVariant = variants.find(v => 
     (selectedColor ? v.color === selectedColor : true) && 
     (activeSize ? v.size === activeSize : true)
-  ) || variants[0];
+  );
+
+  const displayPrice = selectedVariant?.price || variants[0]?.price || product.price;
 
   const images = product.images || [product.image];
 
@@ -404,20 +406,30 @@ function ProductCard({ product, addToCart, index }) {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
           <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
-            ${(selectedVariant?.price || product.price).toFixed(2)}
+            ${displayPrice.toFixed(2)}
           </span>
           <button 
             className="btn btn-outline" 
             style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }} 
-            onClick={() => addToCart({
-              ...product, 
-              id: selectedVariant?.id || product.id,
-              name: `${product.name} ${selectedColor ? `(${selectedColor})` : ''} ${activeSize ? `[${activeSize}]` : ''}`,
-              image: images[currentImageIndex], 
-              color: selectedColor,
-              size: activeSize,
-              price: selectedVariant?.price || product.price
-            })}
+            onClick={() => {
+              if (availableColors.length > 0 && !selectedColor) {
+                alert("Please select a color first.");
+                return;
+              }
+              if (availableSizesForColor.length > 0 && !activeSize) {
+                alert("Please select a size first.");
+                return;
+              }
+              addToCart({
+                ...product, 
+                id: selectedVariant?.id || product.id,
+                name: `${product.name} ${selectedColor ? `(${selectedColor})` : ''} ${activeSize ? `[${activeSize}]` : ''}`,
+                image: images[currentImageIndex], 
+                color: selectedColor,
+                size: activeSize,
+                price: displayPrice
+              });
+            }}
           >
             Add to Cart
           </button>
