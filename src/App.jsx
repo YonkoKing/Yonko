@@ -31,8 +31,6 @@ function App() {
               const productName = (product.name || '').toLowerCase();
               
               let images = [product.image];
-              let colors = [];
-              let description = product.description;
               let imageMap = {};
 
               const isTshirt = productName.includes('t-shirt') || productName.includes('tee');
@@ -55,17 +53,8 @@ function App() {
                     'Dark Heather': '/images/che_guevara_grey.jpg',
                     'Navy': '/images/che_guevara_black.jpg'
                   };
-                  console.log('Images set to:', images);
-                  colors = [
-                    { name: 'Original', hex: '#000000' },
-                    { name: 'Black', hex: '#1a1a1a' },
-                    { name: 'Maroon', hex: '#800000' },
-                    { name: 'Grey', hex: '#808080' }
-                  ];
-                  description = "Unleash your inner revolutionary with this premium heavyweight cotton tee. Featuring a high-contrast iconic Che Guevara design, tailored for a modern streetwear silhouette.";
                 } else if (isPoster) {
                   images = ['/images/che_guevara_poster.jpg'];
-                  description = "High-quality museum-grade framed poster of the iconic revolutionary. A bold statement piece for your gaming setup or living space.";
                 }
               } else if (productName.includes('stay humble')) {
                 if (isTshirt) {
@@ -83,22 +72,13 @@ function App() {
                     'Dark Heather': '/images/stay_humble_grey.jpg',
                     'Navy': '/images/stay_humble_black.jpg'
                   };
-                  colors = [
-                    { name: 'Original', hex: '#000000' }, 
-                    { name: 'Black', hex: '#1a1a1a' }, 
-                    { name: 'Maroon', hex: '#800000' },
-                    { name: 'Grey', hex: '#808080' }
-                  ];
-                  description = "Stay grounded, stay focused. This urban drip tee combines minimalist typography with a bold message. 100% premium cotton for maximum comfort.";
                 } else if (isPoster) {
                   images = ['/images/stay_humble_poster_new.jpg', '/images/stay_humble_poster_2.jpg', '/images/stay_humble_poster_1.png'];
-                  description = "High-quality museum-grade framed poster of the 'Stay Humble' neon aesthetic. A vibrant urban statement piece for your gaming setup or living space.";
                 }
               } else if (productName.includes('hasta la victoria siempre') && productName.includes('street skull art print')) {
                 images = [
                   '/images/street_skull_art.png'
                 ];
-                description = "Own a piece of revolutionary urban art. This premium 'Hasta La Victoria Siempre' Street Skull Art Print blends iconic history with modern psychedelic aesthetics. A masterpiece for any contemporary space.";
               } else if (productName.includes('hasta la victoria siempre') && productName.includes('trucker cap')) {
                 images = [
                   '/images/trucker_cap_tan.jpg',
@@ -118,15 +98,12 @@ function App() {
                   'Silver': '/images/trucker_cap_grey_2.jpg',
                   'Black': '/images/trucker_cap_1.png'
                 };
-                description = "Embrace the revolutionary spirit with this premium trucker cap. Features the iconic 'Hasta la victoria siempre' slogan with a bold red star. High-quality mesh back for breathability.";
               }
 
               return {
                 ...product,
                 images: images,
-                imageMap: imageMap,
-                colors: colors,
-                description: description
+                imageMap: imageMap
               };
             });
 
