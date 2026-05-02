@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Routes, Route, Link, useNavigate } from 'react-router-dom';
-import { ShoppingCart, ShoppingBag, X, Plus, Minus, Loader } from 'lucide-react';
+import { ShoppingCart, ShoppingBag, X, Plus, Minus, Loader, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 
 import { products as mockProducts } from './data/products';
@@ -33,6 +33,7 @@ function App() {
               let images = [product.image];
               let colors = [];
               let description = product.description;
+              let imageMap = {};
 
               const isTshirt = productName.includes('t-shirt') || productName.includes('tee');
               const isPoster = productName.includes('poster');
@@ -46,6 +47,14 @@ function App() {
                     '/images/che_guevara_maroon.jpg',
                     '/images/che_guevara_grey.jpg'
                   ];
+                  imageMap = {
+                    'Black': '/images/che_guevara_black.jpg',
+                    'Maroon': '/images/che_guevara_maroon.jpg',
+                    'Sport Grey': '/images/che_guevara_grey.jpg',
+                    'Charcoal': '/images/che_guevara_grey.jpg',
+                    'Dark Heather': '/images/che_guevara_grey.jpg',
+                    'Navy': '/images/che_guevara_black.jpg'
+                  };
                   console.log('Images set to:', images);
                   colors = [
                     { name: 'Original', hex: '#000000' },
@@ -66,6 +75,14 @@ function App() {
                     '/images/stay_humble_maroon.jpg',
                     '/images/stay_humble_grey.jpg'
                   ];
+                  imageMap = {
+                    'Black': '/images/stay_humble_black.jpg',
+                    'Maroon': '/images/stay_humble_maroon.jpg',
+                    'Sport Grey': '/images/stay_humble_grey.jpg',
+                    'Charcoal': '/images/stay_humble_grey.jpg',
+                    'Dark Heather': '/images/stay_humble_grey.jpg',
+                    'Navy': '/images/stay_humble_black.jpg'
+                  };
                   colors = [
                     { name: 'Original', hex: '#000000' }, 
                     { name: 'Black', hex: '#1a1a1a' }, 
@@ -77,7 +94,12 @@ function App() {
                   images = ['/images/stay_humble_poster_new.jpg', '/images/stay_humble_poster_2.jpg', '/images/stay_humble_poster_1.png'];
                   description = "High-quality museum-grade framed poster of the 'Stay Humble' neon aesthetic. A vibrant urban statement piece for your gaming setup or living space.";
                 }
-              } else if (productName.includes('hasta la victoria siempre')) {
+              } else if (productName.includes('hasta la victoria siempre') && productName.includes('street skull art print')) {
+                images = [
+                  '/images/street_skull_art.png'
+                ];
+                description = "Own a piece of revolutionary urban art. This premium 'Hasta La Victoria Siempre' Street Skull Art Print blends iconic history with modern psychedelic aesthetics. A masterpiece for any contemporary space.";
+              } else if (productName.includes('hasta la victoria siempre') && productName.includes('trucker cap')) {
                 images = [
                   '/images/trucker_cap_tan.jpg',
                   '/images/trucker_cap_grey_2.jpg',
@@ -88,12 +110,21 @@ function App() {
                   '/images/trucker_cap_5.jpg',
                   '/images/trucker_cap_6.jpg'
                 ];
+                imageMap = {
+                  'Caramel/ Black': '/images/trucker_cap_tan.jpg',
+                  'Khaki': '/images/trucker_cap_tan.jpg',
+                  'Tan': '/images/trucker_cap_tan.jpg',
+                  'Grey': '/images/trucker_cap_grey_2.jpg',
+                  'Silver': '/images/trucker_cap_grey_2.jpg',
+                  'Black': '/images/trucker_cap_1.png'
+                };
                 description = "Embrace the revolutionary spirit with this premium trucker cap. Features the iconic 'Hasta la victoria siempre' slogan with a bold red star. High-quality mesh back for breathability.";
               }
 
               return {
                 ...product,
                 images: images,
+                imageMap: imageMap,
                 colors: colors,
                 description: description
               };
@@ -231,38 +262,60 @@ function App() {
 }
 
 function ProductCard({ product, addToCart, index }) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedColor, setSelectedColor] = useState(product.colors?.[0] || null);
-  const [isHovered, setIsHovered] = useState(false);
-  const timerRef = useRef(null);
+  const variants = product.variants || [];
   
-  const images = product.images || [product.image];
+  // Extract unique colors globally
+  const availableColors = [...new Set(variants.map(v => v.color))].filter(Boolean);
 
-  useEffect(() => {
-    if (isHovered && images.length > 1) {
-      timerRef.current = setInterval(() => {
-        setCurrentImageIndex((prev) => (prev + 1) % images.length);
-      }, 3000);
-    } else {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-      // Reset to first image or color-selected image when not hovering?
-      // Actually, let's keep it on the current one or reset if desired.
-      // The user usually wants it to reset or stay. Let's keep it simple.
-    }
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedColor, setSelectedColor] = useState(availableColors[0] || null);
+  
+  // Calculate sizes strictly available for the selected color
+  const availableSizesForColor = [...new Set(variants.filter(v => !selectedColor || v.color === selectedColor).map(v => v.size))].filter(Boolean);
+  const [selectedSize, setSelectedSize] = useState(availableSizesForColor[0] || null);
+  
+  // Dynamically derive the valid size without using an effect
+  const activeSize = availableSizesForColor.includes(selectedSize) ? selectedSize : availableSizesForColor[0];
 
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+  // Color name to Hex mapping
+  const colorToHex = (colorName) => {
+    const map = {
+      'Black': '#1a1a1a',
+      'White': '#ffffff',
+      'Charcoal': '#36454f',
+      'Navy': '#000080',
+      'Red': '#cc0000',
+      'Royal Blue': '#002366',
+      'Sport Grey': '#9ea2a2',
+      'Maroon': '#5e1914',
+      'Dark Heather': '#353b3c',
+      'Irish Green': '#009e60',
+      'Orange': '#ffa500',
+      'Purple': '#800080',
+      'Light Blue': '#add8e6',
+      'Light Pink': '#ffb6c1',
+      'Gold': '#ffd700',
+      'Sand': '#c2b280',
+      'Military Green': '#4b5320',
+      'Forest Green': '#1b402e',
+      'Tan': '#d2b48c',
+      'Grey': '#808080'
     };
-  }, [isHovered, images.length]);
+    return map[colorName] || '#808080';
+  };
+
+  // Find the strictly exact variant based on selection
+  const selectedVariant = variants.find(v => 
+    (selectedColor ? v.color === selectedColor : true) && 
+    (activeSize ? v.size === activeSize : true)
+  ) || variants[0];
+
+  const images = product.images || [product.image];
 
   return (
     <div 
       className="glass-panel animate-fade-in" 
       style={{ padding: '1rem', display: 'flex', flexDirection: 'column', animationDelay: `${index * 100}ms` }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="product-image-container">
         <img 
@@ -273,7 +326,32 @@ function ProductCard({ product, addToCart, index }) {
         />
         
         {images.length > 1 && (
-          <div className="image-nav-dots" style={{ opacity: isHovered ? 1 : 0 }}>
+          <>
+            <button 
+              className="image-nav-arrow prev"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+              }}
+            >
+              <ChevronLeft size={20} />
+            </button>
+            <button 
+              className="image-nav-arrow next"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setCurrentImageIndex((prev) => (prev + 1) % images.length);
+              }}
+            >
+              <ChevronRight size={20} />
+            </button>
+          </>
+        )}
+
+        {images.length > 1 && (
+          <div className="image-nav-dots">
             {images.map((_, idx) => (
               <div 
                 key={idx} 
@@ -292,29 +370,54 @@ function ProductCard({ product, addToCart, index }) {
       <div style={{ padding: '0.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <h3 style={{ fontSize: '1.05rem', marginBottom: '0.75rem', lineHeight: '1.4', fontWeight: '600' }}>{product.name}</h3>
         
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
-          {product.colors && product.colors.length > 0 && (
-            <div className="color-swatches" style={{ marginBottom: 0 }}>
-              {product.colors.map((color, idx) => (
-                <div 
-                  key={idx}
-                  className={`color-swatch ${selectedColor?.name === color.name ? 'active' : ''}`}
-                  style={{ backgroundColor: color.hex }}
-                  data-name={color.name}
-                  onClick={() => {
-                    setSelectedColor(color);
-                    if (idx < images.length) {
-                      setCurrentImageIndex(idx); 
-                    }
-                  }}
-                />
-              ))}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1rem' }}>
+          {/* Color Selection */}
+          {availableColors.length > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div className="color-swatches" style={{ marginBottom: 0 }}>
+                {availableColors.map((colorName, idx) => (
+                  <div 
+                    key={idx}
+                    className={`color-swatch ${selectedColor === colorName ? 'active' : ''}`}
+                    style={{ backgroundColor: colorToHex(colorName) }}
+                    data-name={colorName}
+                    title={colorName}
+                    onClick={() => {
+                      setSelectedColor(colorName);
+                      // Exact mapping from imageMap
+                      if (product.imageMap && product.imageMap[colorName]) {
+                        const targetImg = product.imageMap[colorName];
+                        const imgIdx = images.indexOf(targetImg);
+                        if (imgIdx !== -1) {
+                          setCurrentImageIndex(imgIdx);
+                        }
+                      } else if (idx < images.length) {
+                        // Fallback index
+                        setCurrentImageIndex(idx); 
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+              <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
+                {selectedColor}
+              </span>
             </div>
           )}
-          {selectedColor && (
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', fontWeight: '500' }}>
-              {selectedColor.name}
-            </span>
+
+          {/* Size Selection */}
+          {availableSizesForColor.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              {availableSizesForColor.map((size, idx) => (
+                <button
+                  key={idx}
+                  className={`btn-size ${activeSize === size ? 'active' : ''}`}
+                  onClick={() => setSelectedSize(size)}
+                >
+                  {size}
+                </button>
+              ))}
+            </div>
           )}
         </div>
 
@@ -324,9 +427,21 @@ function ProductCard({ product, addToCart, index }) {
         
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
           <span style={{ fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--accent-primary)' }}>
-            ${product.price.toFixed(2)}
+            ${(selectedVariant?.price || product.price).toFixed(2)}
           </span>
-          <button className="btn btn-outline" style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }} onClick={() => addToCart({...product, image: images[currentImageIndex], color: selectedColor})}>
+          <button 
+            className="btn btn-outline" 
+            style={{ padding: '0.5rem 1rem', fontSize: '0.85rem' }} 
+            onClick={() => addToCart({
+              ...product, 
+              id: selectedVariant?.id || product.id,
+              name: `${product.name} ${selectedColor ? `(${selectedColor})` : ''} ${activeSize ? `[${activeSize}]` : ''}`,
+              image: images[currentImageIndex], 
+              color: selectedColor,
+              size: activeSize,
+              price: selectedVariant?.price || product.price
+            })}
+          >
             Add to Cart
           </button>
         </div>
