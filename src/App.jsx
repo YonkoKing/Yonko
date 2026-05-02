@@ -77,6 +77,7 @@ function App() {
                 }
               } else if (productName.includes('hasta la victoria siempre') && productName.includes('street skull art print')) {
                 images = [
+                  '/images/street_skull_art_main.png',
                   '/images/street_skull_art.png'
                 ];
               } else if (productName.includes('hasta la victoria siempre') && productName.includes('trucker cap')) {
