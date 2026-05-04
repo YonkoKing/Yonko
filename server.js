@@ -79,7 +79,10 @@ app.get('/api/products', async (req, res) => {
           external_id: p.external_id,
           name: p.name,
           price: parseFloat(retailPrice),
-          description: `Produit Printful: ${p.name}`,
+          description: p.name.includes('Cap') ? 'A stylish and comfortable cap for any casual occasion.' : 
+                       p.name.includes('T-Shirt') || p.name.includes('Tee') ? 'Premium quality t-shirt with an exclusive design. Comfortable and durable.' :
+                       p.name.includes('Print') || p.name.includes('Poster') ? 'High-quality art print to decorate your space with unique designs.' :
+                       `Premium quality ${p.name.toLowerCase()} featuring an exclusive design.`,
           image: p.thumbnail_url,
           category: 'Printful',
           variants: details.sync_variants.map(v => ({
@@ -127,7 +130,7 @@ const getPayPalAccessToken = async () => {
     return response.data.access_token;
   } catch (error) {
     console.error('PayPal Auth Error:', error.response?.data || error.message);
-    throw new Error('Failed to get PayPal access token');
+    throw new Error('Failed to get PayPal access token', { cause: error });
   }
 };
 

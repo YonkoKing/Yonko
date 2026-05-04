@@ -127,7 +127,7 @@ const getPayPalAccessToken = async () => {
     return response.data.access_token;
   } catch (error) {
     console.error('PayPal Auth Error:', error.response?.data || error.message);
-    throw new Error('Failed to get PayPal access token');
+    throw new Error('Failed to get PayPal access token', { cause: error });
   }
 };
 

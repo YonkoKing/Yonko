@@ -20,7 +20,7 @@ async function checkProduct(id) {
       const res = await axios.get(`${PRINTFUL_API_URL}/store/products/${id}`, { headers });
       console.log('Found as Product ID:', JSON.stringify(res.data.result, null, 2));
       return;
-    } catch (e) {
+    } catch {
       console.log('Not a direct Product ID.');
     }
 
