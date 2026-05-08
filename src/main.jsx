@@ -6,7 +6,7 @@ import './index.css'
 import App from './App.jsx'
 
 const initialOptions = {
-  "client-id": "test", // This will be replaced by the user in .env later, but for now we need something for the script to load
+  "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID || "test",
   currency: "USD",
   intent: "capture",
 };
