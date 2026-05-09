@@ -320,15 +320,6 @@ function VariantSelector({ availableColors, selectedColor, setSelectedColor, ava
   );
 }
 
-function isSimpleMockup(url) {
-  if (!url) return false;
-  const lowerUrl = url.toLowerCase();
-  if (lowerUrl.includes('printful.com')) return true;
-  if (lowerUrl.includes('mockup')) return true;
-  if (lowerUrl.includes('lifestyle') || lowerUrl.includes('room') || lowerUrl.includes('details') || lowerUrl.includes('framed')) return false;
-  return true;
-}
-
 function ProductCard({ product, addToCart, windowWidth, openModal }) {
   const variants = product.variants || [];
   const availableColors = [...new Set(variants.map(v => v.color))].filter(Boolean);
@@ -340,13 +331,10 @@ function ProductCard({ product, addToCart, windowWidth, openModal }) {
   const selectedVariant = variants.find(v => (selectedColor ? v.color === selectedColor : true) && (activeSize ? v.size === activeSize : true));
   const displayPrice = selectedVariant?.price || variants[0]?.price || product.price;
 
-  const currentImage = images[currentImageIndex];
-  const isNeonMode = isSimpleMockup(currentImage);
-
   return (
     <div className="product-card-professional glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      <div className={`product-image-container ${isNeonMode ? 'neon-mode' : ''}`} onClick={() => openModal(product)} style={{ cursor: 'pointer', aspectRatio: '1/1', overflow: 'hidden' }}>
-        <img src={currentImage} alt={product.name} className="product-image" />
+      <div className="product-image-container" onClick={() => openModal(product)} style={{ cursor: 'pointer', aspectRatio: '1/1', overflow: 'hidden' }}>
+        <img src={images[currentImageIndex]} alt={product.name} className="product-image" />
       </div>
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>{product.name}</h3>
@@ -382,8 +370,6 @@ function SharedProductModal({ product, onClose, addToCart, windowWidth }) {
   );
 
   const displayPrice = selectedVariant?.price || variants[0]?.price || product.price;
-  const currentImage = images[currentImageIndex];
-  const isNeonMode = isSimpleMockup(currentImage);
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(10, 12, 16, 0.98)', backdropFilter: 'blur(16px)', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
@@ -454,37 +440,22 @@ function SharedProductModal({ product, onClose, addToCart, windowWidth }) {
             background: 'linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.2))',
             overflowY: windowWidth > 1100 ? 'auto' : 'visible'
           }}>
-            <div 
-              className={isNeonMode ? 'neon-mode' : ''}
-              style={{
-                aspectRatio: '1/1',
-                background: isNeonMode ? "url('/images/neon_bg.png')" : 'rgba(255,255,255,0.02)',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                borderRadius: '32px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                border: isNeonMode ? '2px solid rgba(147, 51, 234, 0.4)' : '2px solid rgba(255,255,255,0.05)',
-                position: 'relative',
-                boxShadow: isNeonMode ? '0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(147, 51, 234, 0.2)' : '0 40px 100px rgba(0,0,0,0.6)'
-              }}
-            >
-              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%)', zIndex: 1 }}></div>
+            <div style={{
+              aspectRatio: '1/1',
+              background: 'rgba(255,255,255,0.02)',
+              borderRadius: '32px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              overflow: 'hidden',
+              border: '2px solid rgba(255,255,255,0.05)',
+              position: 'relative',
+              boxShadow: '0 40px 100px rgba(0,0,0,0.6)'
+            }}>
               <img
-                src={currentImage}
+                src={images[currentImageIndex]}
                 alt={product.name}
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover', 
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)', 
-                  mixBlendMode: isNeonMode ? 'screen' : 'normal', 
-                  position: 'relative', 
-                  zIndex: 2, 
-                  filter: isNeonMode ? 'brightness(1.1) contrast(1.1) drop-shadow(0 0 20px rgba(59, 130, 246, 0.4))' : 'none' 
-                }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
               />
 
               {images.length > 1 && (
