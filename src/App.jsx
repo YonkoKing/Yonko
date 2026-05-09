@@ -442,20 +442,23 @@ function SharedProductModal({ product, onClose, addToCart, windowWidth }) {
           }}>
             <div style={{
               aspectRatio: '1/1',
-              background: 'rgba(255,255,255,0.02)',
+              backgroundImage: "url('/images/cyberpunk_bg.png')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
               borderRadius: '32px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               overflow: 'hidden',
-              border: '2px solid rgba(255,255,255,0.05)',
+              border: '2px solid rgba(147, 51, 234, 0.4)',
               position: 'relative',
-              boxShadow: '0 40px 100px rgba(0,0,0,0.6)'
+              boxShadow: '0 40px 100px rgba(0,0,0,0.8), 0 0 50px rgba(147, 51, 234, 0.2)'
             }}>
+              <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4) 100%)', zIndex: 1 }}></div>
               <img
                 src={images[currentImageIndex]}
                 alt={product.name}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)', mixBlendMode: 'screen', position: 'relative', zIndex: 2, filter: 'drop-shadow(0 0 20px rgba(147, 51, 234, 0.3))' }}
               />
 
               {images.length > 1 && (
