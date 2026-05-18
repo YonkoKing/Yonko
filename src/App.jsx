@@ -83,13 +83,13 @@ function colorToHex(colorName) {
   const map = {
     'Black': '#111111',
     'White': '#ffffff',
-    'Charcoal': '#36454f',
+    'Charcoal': '#2b2b2b',
     'Navy': '#1c2e4a',
     'Red': '#cc0000',
     'Royal Blue': '#002366',
     'Sport Grey': '#9ea2a2',
     'Maroon': '#6a1b1a',
-    'Dark Heather': '#3a3a3a',
+    'Dark Heather': '#4a4a4a',
     'Irish Green': '#009e60',
     'Orange': '#ffa500',
     'Purple': '#800080',
@@ -143,35 +143,137 @@ function App() {
             let imageMap = {};
             const isTshirt = productName.includes('t-shirt') || productName.includes('tee');
             const isPoster = productName.includes('poster') || productName.includes('print');
+            
             if (productName.includes('che guevara')) {
               if (isTshirt) {
-                images = ['/images/che_guevara_tshirt/che_guevara_mockup.png', '/images/che_guevara_tshirt/che_guevara_black.jpg', '/images/che_guevara_tshirt/che_guevara_maroon.jpg', '/images/che_guevara_tshirt/che_guevara_navy.jpg', '/images/che_guevara_tshirt/che_guevara_cardinal.png', '/images/che_guevara_tshirt/che_guevara_charcoal.png', '/images/che_guevara_tshirt/che_guevara_purple.png', '/images/che_guevara_tshirt/che_guevara_grey.jpg', '/images/che_guevara_tshirt/details/unisex-classic-tee-black-front-69f2146f45532.png', '/images/che_guevara_tshirt/details/unisex-classic-tee-black-back-69f2146f45698.png'];
-                imageMap = { 'Black': '/images/che_guevara_tshirt/che_guevara_black.jpg', 'Maroon': '/images/che_guevara_tshirt/che_guevara_maroon.jpg', 'Navy': '/images/che_guevara_tshirt/che_guevara_navy.jpg', 'Cardinal': '/images/che_guevara_tshirt/che_guevara_cardinal.png', 'Charcoal': '/images/che_guevara_tshirt/che_guevara_charcoal.png', 'Purple': '/images/che_guevara_tshirt/che_guevara_purple.png', 'Dark Heather': '/images/che_guevara_tshirt/che_guevara_grey.jpg', 'Grey': '/images/che_guevara_tshirt/che_guevara_grey.jpg' };
+                images = [
+                  '/images/che_guevara_tshirt/che_guevara_mockup.png',
+                  '/images/che_guevara_tshirt/che_guevara_black.png',
+                  '/images/che_guevara_tshirt/che_guevara_cardinal.png',
+                  '/images/che_guevara_tshirt/che_guevara_charcoal.png',
+                  '/images/che_guevara_tshirt/che_guevara_grey.png',
+                  '/images/che_guevara_tshirt/che_guevara_maroon.png',
+                  '/images/che_guevara_tshirt/che_guevara_navy.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-black-front-and-back-69f8b4246bdd6.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-cardinal-front-and-back-69f8b4246c17e.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-charcoal-front-and-back-69f8b4246c256.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-dark-heather-front-and-back-69f8b4246c2ef.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-maroon-front-and-back-69f8b4246c38d.png',
+                  '/images/che_guevara_tshirt/details/unisex-classic-tee-navy-front-and-back-69f8b4246c41f.png'
+                ];
+                imageMap = {
+                  'Black': '/images/che_guevara_tshirt/che_guevara_black.png',
+                  'Cardinal': '/images/che_guevara_tshirt/che_guevara_cardinal.png',
+                  'Charcoal': '/images/che_guevara_tshirt/che_guevara_charcoal.png',
+                  'Grey': '/images/che_guevara_tshirt/che_guevara_grey.png',
+                  'Maroon': '/images/che_guevara_tshirt/che_guevara_maroon.png',
+                  'Navy': '/images/che_guevara_tshirt/che_guevara_navy.png'
+                };
               } else if (isPoster) {
-                images = ['/images/che_guevara_poster/che_guevara_poster.jpg', '/images/che_guevara_poster/details/enhanced-matte-paper-framed-poster-(in)-black-12x16-lifestyle-1-69f214a1a3857.png', '/images/che_guevara_poster/details/enhanced-matte-paper-framed-poster-(in)-black-12x16-lifestyle-2-69f214a1a3987.png'];
+                images = [
+                  '/images/che_guevara_poster/che_guevara_poster.jpg',
+                  '/images/che_guevara_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f8b2e2ba824.png',
+                  '/images/che_guevara_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f8b2e2bab06.png',
+                  '/images/che_guevara_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-lifestyle-1-69f8b228b0297.png'
+                ];
               }
             } else if (productName.includes('stay humble')) {
               if (isTshirt) {
-                images = ['/images/stay_humble_tshirt/stay_humble_mockup.png', '/images/stay_humble_tshirt/stay_humble_black.jpg', '/images/stay_humble_tshirt/stay_humble_maroon.jpg', '/images/stay_humble_tshirt/stay_humble_navy.png', '/images/stay_humble_tshirt/details/unisex-classic-tee-black-front-and-back-69decc396a8c3.png', '/images/stay_humble_tshirt/details/unisex-classic-tee-maroon-front-and-back-69decc392d1b9.png', '/images/stay_humble_tshirt/details/unisex-classic-tee-navy-front-and-back-69decc39d0fc6.png'];
-                imageMap = { 'Black': '/images/stay_humble_tshirt/stay_humble_black.jpg', 'Maroon': '/images/stay_humble_tshirt/stay_humble_maroon.jpg', 'Navy': '/images/stay_humble_tshirt/stay_humble_navy.png' };
+                images = [
+                  '/images/stay_humble_tshirt/stay_humble_maroon.png',
+                  '/images/stay_humble_tshirt/stay_humble_mockup.png',
+                  '/images/stay_humble_tshirt/stay_humble_black.png',
+                  '/images/stay_humble_tshirt/stay_humble_navy.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-black-front-and-back-69decc396a8c3.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-black-left-front-69decc395d244.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-maroon-front-69decc3923b77.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-maroon-front-and-back-69decc392d1b9.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-navy-front-and-back-69decc39d0fc6.png',
+                  '/images/stay_humble_tshirt/details/unisex-classic-tee-navy-left-front-69decc3990b8a.png'
+                ];
+                imageMap = {
+                  'Black': '/images/stay_humble_tshirt/stay_humble_black.png',
+                  'Maroon': '/images/stay_humble_tshirt/stay_humble_maroon.png',
+                  'Navy': '/images/stay_humble_tshirt/stay_humble_navy.png'
+                };
               } else if (isPoster) {
-                images = ['/images/stay_humble_poster/stay_humble_poster_new.jpg', '/images/stay_humble_poster/1777897789856.png', '/images/stay_humble_poster/stay_humble_poster_1.png', '/images/stay_humble_poster/stay_humble_poster_2.jpg', '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-12x16-front-69f5569bba79a.png', '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-18x18-front-69f8b4e30a7f9.png'];
-                imageMap = { 'Black': '/images/stay_humble_poster/stay_humble_poster_new.jpg', 'White': '/images/stay_humble_poster/1777897789856.png' };
+                images = [
+                  '/images/stay_humble_poster/stay_humble_poster_new.jpg',
+                  '/images/stay_humble_poster/1777897789856.png',
+                  '/images/stay_humble_poster/stay_humble_poster_1.png',
+                  '/images/stay_humble_poster/stay_humble_poster_2.jpg',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-14x14-front-69f8b4e307ab7.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-14x14-front-69f8b4e308c20.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-14x14-front-69f8b4e309cb5.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-16x16-front-69f8b4e30817d.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-16x16-front-69f8b4e30915d.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-16x16-front-69f8b4e30a250.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x18-front-69f8b4e3086de.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x18-front-69f8b4e309715.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-black-18x18-front-69f8b4e30a784.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-14x14-front-69f8b4e307c5a.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-14x14-front-69f8b4e308c91.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-14x14-front-69f8b4e309d63.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-16x16-front-69f8b4e308216.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-16x16-front-69f8b4e309206.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-16x16-front-69f8b4e30a2c5.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-18x18-front-69f8b4e308773.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-18x18-front-69f8b4e3097b9.png',
+                  '/images/stay_humble_poster/details/enhanced-matte-paper-framed-poster-(in)-white-18x18-front-69f8b4e30a7f9.png'
+                ];
+                imageMap = {
+                  'Black': '/images/stay_humble_poster/stay_humble_poster_new.jpg',
+                  'White': '/images/stay_humble_poster/1777897789856.png'
+                };
               }
             } else if (productName.includes('hasta la victoria siempre') && productName.includes('skull')) {
-              images = ['/images/skull_art_print/street_skull_art_main.png', '/images/skull_art_print/street_skull_art.png', '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f5569bba2ac.png', '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-18x24-front-69f5569bba301.png'];
-              imageMap = { 'Black': '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f5569bba2ac.png', 'White': '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-18x24-front-69f5569bba301.png' };
+              images = [
+                '/images/skull_art_print/street_skull_art_main.png',
+                '/images/skull_art_print/street_skull_art.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-12x16-front-69f5569bba742.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-12x18-front-69f5569bbabcb.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-16x20-front-69f5569bbb067.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f5569bba2ac.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-12x16-front-69f5569bba79a.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-12x18-front-69f5569bbac23.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-16x20-front-69f5569bbb0c0.png',
+                '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-18x24-front-69f5569bba301.png'
+              ];
+              imageMap = {
+                'Black': '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-black-18x24-front-69f5569bba2ac.png',
+                'White': '/images/skull_art_print/details/enhanced-matte-paper-framed-poster-(in)-white-18x24-front-69f5569bba301.png'
+              };
+            } else if (productName.includes('hasta la victoria') && productName.includes('hoodie')) {
+              images = ['/images/hasta_la_victoria_hoodie/hoodie_main.jpg'];
             } else if (productName.includes('hasta la victoria siempre') && productName.includes('trucker cap')) {
-              images = ['/images/trucker_cap/trucker_cap_1.png', '/images/trucker_cap/trucker_cap_tan.jpg', '/images/trucker_cap/trucker_cap_grey_2.jpg', '/images/trucker_cap/trucker_cap_2.png', '/images/trucker_cap/trucker_cap_3.png', '/images/trucker_cap/trucker_cap_4.png', '/images/trucker_cap/trucker_cap_5.jpg', '/images/trucker_cap/trucker_cap_6.jpg'];
-              imageMap = { 'Heather Grey/White': '/images/trucker_cap/trucker_cap_grey_2.jpg', 'Silver': '/images/trucker_cap/trucker_cap_grey_2.jpg', 'Khaki': '/images/trucker_cap/trucker_cap_tan.jpg', 'White': '/images/trucker_cap/trucker_cap_1.png' };
+              images = [
+                '/images/trucker_cap/trucker_cap_1.png',
+                '/images/trucker_cap/trucker_cap_2.png',
+                '/images/trucker_cap/trucker_cap_3.png',
+                '/images/trucker_cap/trucker_cap_4.png',
+                '/images/trucker_cap/trucker_cap_5.jpg',
+                '/images/trucker_cap/trucker_cap_6.jpg',
+                '/images/trucker_cap/trucker_cap_grey_2.jpg',
+                '/images/trucker_cap/trucker_cap_tan.jpg'
+              ];
+              imageMap = {
+                'White': '/images/trucker_cap/trucker_cap_1.png',
+                'Tan': '/images/trucker_cap/trucker_cap_tan.jpg',
+                'Heather Grey/White': '/images/trucker_cap/trucker_cap_grey_2.jpg',
+                'Silver': '/images/trucker_cap/trucker_cap_grey_2.jpg',
+                'Khaki': '/images/trucker_cap/trucker_cap_tan.jpg'
+              };
             }
+            
             let badge = null;
             if (productName.includes('che guevara')) badge = 'Best Seller';
             if (productName.includes('stay humble')) badge = 'Trending';
             if (productName.includes('skull')) badge = 'New Drop';
+            
             let features = ['Premium Quality Material', 'Ethically Sourced', 'High-Definition Print'];
             if (isTshirt) features.push('100% Ring-spun cotton', 'Durable double-stitching');
             if (isPoster) features.push('Museum-quality paper', 'Gicl\u00e9e printing quality');
+            
             return { ...product, images, imageMap, badge, features };
           });
           const sortedData = [...mappedData].sort((a, b) => {
@@ -334,7 +436,12 @@ function ProductCard({ product, addToCart, windowWidth, openModal }) {
   return (
     <div className="product-card-professional glass-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <div className="product-image-container" onClick={() => openModal(product)} style={{ cursor: 'pointer', aspectRatio: '1/1', overflow: 'hidden' }}>
-        <img src={images[currentImageIndex]} alt={product.name} className="product-image" />
+        <img 
+          key={currentImageIndex}
+          src={images[currentImageIndex]} 
+          alt={product.name} 
+          className="product-image animate-image-swap" 
+        />
       </div>
       <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
         <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>{product.name}</h3>
@@ -453,9 +560,11 @@ function SharedProductModal({ product, onClose, addToCart, windowWidth }) {
               boxShadow: '0 40px 100px rgba(0,0,0,0.6)'
             }}>
               <img
+                key={currentImageIndex}
                 src={images[currentImageIndex]}
                 alt={product.name}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)' }}
+                className="animate-image-swap"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
 
               {images.length > 1 && (
